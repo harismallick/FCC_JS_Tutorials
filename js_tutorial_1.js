@@ -174,9 +174,188 @@ console.log(nestedArray);
 // pop() --> works the same as in Python. Removes the last element in an array.
 
 var poppedElement = nestedArray.pop();
-console.log(`${poppedElement} removed from ${nestedArray}`);
+console.log(`${poppedElement} removed to make ${nestedArray}`);
 
 // shift() --> Its the opposite of pop(); removes the first element from the array.
 
 var shiftedElement = nestedArray.shift();
-console.log(`${shiftedElement} removed from ${nestedArray}`);
+console.log(`${shiftedElement} removed to make ${nestedArray}`);
+
+// unshift() --> Its the opposite of push(); adds an element to the front of the array.
+
+var unshiftedElement = [1,2,3];
+nestedArray.unshift(unshiftedElement)
+console.log(`${unshiftedElement} added to make ${nestedArray}`);
+
+// Using backticks outputs an array differently in to console to a normal output.
+
+var shoppingList = [["cereal", 3], ["milk", 2], ["bananas", 3], ["juice", 2], ["eggs", 12]];
+
+/////////////////////////////////////////////////////////////////////////////////
+
+/* Functions in JS */
+
+// Define a code snippet that can be executed anytime it is called.
+// A function is initialised using the 'function' reserved word. 'def' in Python.
+// name the function and follow with parentheses (). args and kwargs for function written in them.
+// Then open a pair of curly brackets {}. The code to be executed is written in here. Each line of code in here should be followed up with semicolon. No need to add semicolon after the closing curly bracket.
+// Variables defined outside of functions have global scope; can be accessed anywhere in the code.
+// Variables defined with 'var', 'const' or 'let' within a function have local scope to that function. Cannot be accessed outside it.
+// However, if you define a variable without using the above 3 reserved words in a function, it WILL have global scope. This is not considered good practice though.
+// If a local variable and a global variable have the same name, the local variable takes precedence within the function.
+// The return output from a function can be stored in variables.
+
+function exampleFunction() {
+    console.log("Hello world");
+}
+
+exampleFunction();
+
+function funcWithArgs(num1, num2, operator) {
+    if (operator == "+") {
+        console.log(num1 + num2);
+    }
+    else if (operator == "-") {
+        console.log(num1 - num2);
+    }
+    else {
+        console.log("Invalid operator given");
+    }
+    
+}
+
+funcWithArgs(10, 8, "+");
+funcWithArgs(10, 8, "-");
+funcWithArgs(10, 8, "*");
+
+// Testing precedence of local scope vs global scope in a function:
+
+var outerWear = "T-shirt";
+function myOutfit() {
+    var outerWear = "Sweater";
+    return outerWear;
+}
+console.log(myOutfit());
+console.log(outerWear);
+
+function returnTest(num1, num2) {
+    sum = num1 + num2;
+    diff = num1 - num2;
+    return sum, diff; //this syntax does not work in JS! Only the last element will be returned. Must return multiple values as either an array or an object!
+}
+
+var addition, subtraction = returnTest(10, 5);
+console.log(`Result of sum is ${addition} and of subtraction is ${subtraction}`);
+// addition variable is undefined when trying to implement Python syntax.
+
+function returnTest2(num1, num2) {
+    sum = num1 + num2;
+    diff = num1 - num2;
+    return [sum, diff]; //this syntax does not work in JS! Only the last element will be returned. Must return multiple values as either an array or an object!
+}
+
+var [addition2, subtraction2] = returnTest2(10, 5);
+console.log(`Result of sum is ${addition2} and of subtraction is ${subtraction2}`);
+// This is the correct syntax for JS.
+
+//////////////////////////////////////////////////////////////////////////////////
+
+// Equality operators, boolean and if-else statements in JS //
+
+// The equality operator is '=='. No type checking is done with this operator.
+// There is also a strict equality operator, which is '==='. This one type checks, so 3 and '3' will not be identical when using this operator.
+// '!=' is the inequality operator, and '!==' is the strict inequality operator.
+// Other comparison operators are: <, <=, >, >=.
+// If multiple conditions to be tested, use the '&&' operator to combine them into one if statement.
+// For using the 'or' logic in JS, its two pipes '||'.
+
+function equalityOpCheck(num, string) {
+    if (num == string) {
+        console.log(`Using the '==' operator, number ${num} is the same as string ${string}.`);
+    }
+    if (num === string) {
+        console.log(`Using the '===' operator, ${num} is the same as ${string}.`);
+    }
+    else {
+        console.log(`Using '===', number ${num} is different to string ${string}`);
+    }
+}
+equalityOpCheck(3, "3");
+
+function gtLtOperators(num) {
+    if (num >= 5 && num <= 10) {
+        console.log(num**2);
+    }
+    else if (num < 0 || num > 50) {
+        console.log("Can use negatives or very large numbers.");
+    }
+    else {
+        console.log("Number is not in the expected range.");
+    }
+}
+gtLtOperators(7);
+gtLtOperators(3);
+gtLtOperators(-25);
+gtLtOperators(60);
+
+function golfScore(par, strokes) {
+    const scoreChart = {
+        "0": "Par",
+        "1": "Bogey",
+        "2": "Double Bogey",
+        "3": "Go home!",
+        "-1": "Birdie",
+        "-2": "Eagle",
+        "-3": "Albatross" 
+    }
+    var result = strokes - par;
+    if (strokes == 1) {console.log("Hole-in-one!");}
+    else {
+        console.log(`${scoreChart[result]}`);
+    }
+}
+golfScore(4, 4);
+golfScore(4, 1);
+golfScore(4, 3);
+golfScore(4, 2);
+golfScore(5, 2);
+golfScore(4, 5);
+golfScore(4, 6);
+
+// Switch Case statements //
+
+// Rather than chaining multiple if and else if statements together, it might be better to use switch case statements.
+// A break statement is needed between cases if you don't want multiple cases to be checked after one is achieved.
+
+function usingSwitchCase(num) {
+    var answer = "";
+    switch(num) {
+        case 1:
+            answer = "alpha";
+            break;
+        case 2:
+            answer = "beta";
+            break;
+        case 3:
+            answer = "gamma";
+            break;
+        case 4:
+            answer = "delta";
+            break;
+        default:
+            answer = "Invalid number given.";
+            break;
+    }
+    return answer;
+}
+
+console.log(usingSwitchCase(3));
+console.log(usingSwitchCase(7));
+
+// Returning a boolean for an operation in JS //
+// You can return the actual operation and the data stored will either be true or false.
+
+function boolTest(num1, num2) {
+    return num1 < num2;
+}
+console.log(boolTest(15, 10));
