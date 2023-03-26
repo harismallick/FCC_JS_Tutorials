@@ -359,3 +359,62 @@ function boolTest(num1, num2) {
     return num1 < num2;
 }
 console.log(boolTest(15, 10));
+
+/////////////////////////////////////////////////////////////
+
+// Objects (dictionaries) in JS //
+
+// You can use dot notation to store the value of a key:value pair in a variable.
+// Can access value by using bracket notation as well, similar to Python.
+
+var testObject = {
+    "hat": "ballcap",
+    "shirt": "jersey",
+    "shoes": "cleats"
+};
+
+var hatValue = testObject.hat;
+var shirtValue = testObject["shirt"];
+var shoeKey = "shoes";
+console.log(hatValue, shirtValue, testObject[shoeKey]);
+
+// All three ways to access values of dictionary elements in JS.
+// New key:value pairs can be added using these different methods as well.
+
+testObject["pants"] = "cargo";
+testObject.overall = "coat";
+
+console.log(testObject);
+
+delete testObject.overall;
+console.log(testObject);
+
+// This is how you delete a key:value pair from a dict in JS.
+
+// To check if a dict have a particular key, use the dot function ".hasOwnProperty"
+
+if (testObject.hasOwnProperty("overall")) {
+    console.log(testObject.overall);
+}
+else {
+    console.log("Not found");
+}
+
+// Working with complex objects in JS //
+
+var myMusic = [
+    {
+        "artist": "Billy Joel",
+        "title": "Piano Man",
+        "release_year": 1973,
+        "formats": ["cd", "8T", "LP"],
+        "gold": true
+    },
+    {
+        "artist": "John Doe",
+        "title": "Cereal Man",
+        "release_year": 2003,
+        "formats": ["YouTube"],
+        "gold": false
+    }
+]
