@@ -402,19 +402,60 @@ else {
 
 // Working with complex objects in JS //
 
-var myMusic = [
-    {
+var myMusic = {
+    rock: {
         "artist": "Billy Joel",
         "title": "Piano Man",
         "release_year": 1973,
         "formats": ["cd", "8T", "LP"],
         "gold": true
-    },
-    {
+        },
+    hiphop: {
         "artist": "John Doe",
         "title": "Cereal Man",
         "release_year": 2003,
         "formats": ["YouTube"],
         "gold": false
-    }
-]
+        }
+};
+
+console.log(myMusic.rock.artist);
+// Nested objects:
+// They can be accessed using dot notation to get to the desired object and attribute stored inside it.
+
+////////////////////////////////////////////////////////
+
+// While and for loops in JS
+
+var whileList = [];
+var i = 0;
+
+while (i < 5) {
+    whileList.push(i);
+    i++;
+}
+
+var forList = [];
+
+for (var j = 0; j < 5; j++) {
+    forList.push(j);
+}
+
+console.log(whileList, forList);
+
+for (var k = 0; k < forList.length; k++) {
+    num = forList[k];
+    console.log(`${num} x 10 = ${num * 10}`);
+}
+// The '.length' function is the same is len() in Python.
+
+var doWhileList = [];
+l = 10;
+do {
+    doWhileList.push(l);
+    l++;
+} while (l < 5)
+
+console.log(l, doWhileList);
+// a do-while loop always executes once, as the condition is checked at the end of the first loop.
+
