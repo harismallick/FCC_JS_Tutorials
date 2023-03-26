@@ -459,3 +459,79 @@ do {
 console.log(l, doWhileList);
 // a do-while loop always executes once, as the condition is checked at the end of the first loop.
 
+var contacts = [
+    {
+        "firstname": "Akira",
+        "lastname": "Laine",
+        "number": "0543236543",
+        "likes": ["pizza", "coding", "brownie points"]
+    },
+    {
+        "firstname": "Harry",
+        "lastname": "Potter",
+        "number": "0994372684",
+        "likes": ["Hogwarts", "magic", "Hagrid"]
+    },
+    {
+        "firstname": "Sherlock",
+        "lastname": "Holmes",
+        "number": "0487345643",
+        "likes": ["intriguing cases", "violin", "boxing"]
+    },
+    {
+        "firstname": "Kristain",
+        "lastname": "Vos",
+        "number": "unknown",
+        "likes": ["JavaScript", "gaming", "foxes"]
+    }
+];
+
+function profileLookup(name, property) {
+    for (var i = 0; i < contacts.length; i++) {
+        if (contacts[i].firstname == name) {
+            if (contacts[i].hasOwnProperty(property)) {
+                return `${name}'s ${property} is: ${contacts[i][property]}`;
+
+            }
+            else {
+                return "This property does not exist.";
+            }
+        }
+    }
+    return "Name not in database.";
+};
+// console.log(contacts[0].firstname)
+console.log(profileLookup("Sherlock", "number"));
+console.log(profileLookup("David", "number"));
+console.log(profileLookup("Akira", "favmusic"));
+
+///////////////////////////////////////////////////////////////////////////////////////
+
+// Mathematical functions in JS //
+
+// Use the 'Math' package
+
+// 'random()' generates a fraction between 0 and 1.
+var randNum = Math.random();
+console.log(randNum);
+
+// Generate a random whole number using Math.floor() and Math.random():
+
+var randWholeNum = Math.floor(Math.random() * 10);
+console.log(randWholeNum);
+// This example generates random number between 0 and 9.
+
+function randNumInRange(min, max) {
+    var num = Math.floor(Math.random() * (max - min + 1)) + min;
+    return num;
+}
+console.log(randNumInRange(5,15));
+
+// Converting a string to an integer //
+
+// Use the 'parseInt' function to achieve this. 
+
+function strToInt(string) {
+    return parseInt(string);
+}
+console.log(strToInt("543"));
