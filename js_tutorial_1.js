@@ -598,3 +598,114 @@ console.log(freezeObject());
 
 const magic = () => new Date();
 console.log(magic);
+
+const arrayConcat = (arr1, arr2) => arr1.concat(arr2);
+
+console.log(arrayConcat([1,2,3], [11,12,13]));
+
+const realNumArray = [4, 5.6, -9.8, 3.14, 42, 6, 8.34, -2];
+const squareList = (arr) => {
+    const squaredIntegers = arr.filter(num => Number.isInteger(num) && num > 0).map(x => x * x);
+    return squaredIntegers;
+}
+const output = squareList(realNumArray);
+console.log(output);
+
+// Can nest arrow functions, as shown in the above example.
+
+// Passing-in default values for functions in JS -- similar to Python. See example:
+
+function numIncrement(num, increment=1) {
+    return num + increment;
+}
+const result = numIncrement(5,2);
+console.log(result);
+console.log(numIncrement(5));
+
+// The rest operator --> "..." Using this for defining a function argument means the given input is to be converted to an array before used as an argument in the function.
+
+function sumList(...nums) {
+    let sum = nums.reduce((a, b) => a+b, 0);
+    return sum;
+}
+console.log(sumList(5,6,7));
+
+// The spread operator "..." --> This is used to spread the elements of one list into another list.
+// This is different that making the two arrays equal to one another, as in that case, both variables will point to the same elements in memory.
+// The spread operator creates that same elements at a different memory location.
+// See example below:
+
+const array1 = ['JAN', 'FEB', 'MAR', 'APR'];
+let array2 = array1;
+array1[0] = 'MAY';
+console.log(array2);
+
+// In this example, we can see that even though array1 was changed, array2 also changed, as they're pointing to the same element in memory.
+// To avoid this from happening, use the spread operator:
+
+let array3 = [...array1];
+array1[0] = 'JUNE';
+console.log(array3, array1);
+
+// Now, array3 has distinct elements from array1, which can only be altered by directly invoking array3.
+
+// Destructuring objects to assign values to individual variables //
+
+const dictTest = {
+    x: 3,
+    y: 7,
+    z: 4
+};
+const {x : m, y: n, z: o} = dictTest;
+console.log(m, n, o);
+
+// Quick way to extract values stored in dictionaries.
+// The same can be done for nested dictionaries as well.
+// See example below:
+
+const LOCAL_FORECAST = {
+    today: {min: 72, max: 83},
+    tomorrow: {min: 73.3, max: 84.6}
+};
+function getMaxForTmrw(dictionary) {
+    "use strict";
+    const {tomorrow : {max : high}} = dictionary;
+
+    return high;
+}
+console.log(getMaxForTmrw(LOCAL_FORECAST));
+
+// Destructuring arrays requires using variables and index positions to acquire the element(s) you're interested in.
+
+const testArray = [1,2,3,4,5,6];
+const [xx, yy,,,,zz] = testArray;
+// use commas followed by empty space to ignore the index position of elements not needed.
+
+console.log(xx,yy,zz);
+
+const [,, ...arrParse] = testArray;
+console.log(arrParse);
+
+// Detructuring arrays can be used in conjunction with the rest operator.
+
+const result2 = {
+    success: [],
+    failure: ["no-var", "var-on-top", "linebreak"],
+    skipped: ["id-blacklist", "no-dup-keys"]
+};
+
+function makeList(array) {
+    const htmlList = [];
+    for (let i = 0; i < array.length; i++) {
+        let string = `<li class="text-warning">${array[i]}</li>`;
+        htmlList.push(string);
+
+    }
+    return htmlList;
+}
+console.log(makeList(result2.failure));
+
+// Arrow function to create a quick dictionary from given values //
+
+const createPerson = (name, age, gender) => ({name, age, gender});
+console.log(createPerson("John", "40", "Male"));
