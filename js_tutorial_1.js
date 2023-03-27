@@ -30,9 +30,23 @@ undefined, null, boolean, string, symbol, number and object
 // object - this is the Python equivalent of a dictionary
 
 // Three different reserved words allow you to declare a variable:
-// var - The variable declared with this can be used across the entire js file.
+// var - The variable declared with this can be used across the entire js file or withing the scope of where it was declared.
 // let - The variable declared using let will exist within the scope of where it was declared, ie, the function.
-// const - Used to declare a variable, whose value will not change.
+// let and const were introduced with ES6 in 2015.
+// let only allows a variable with a certain name to be ONLY declared once. Trying to create another variable with the same name will generate an error. This is better for avoiding mistakes in the script.
+// With var, variable with a name can be declared multiple times.
+// const - Used to declare a variable, whose value will not change. Its read-only.
+// const variable can be declared in all caps, to help identify them easily in the code.
+// Numbers, strings and boolean declared with const are immutable, but an array declared with const can be modified.
+// This needs to be done by accessing the element using its index position.
+// Example:
+
+const egList = [1, 2, 3];
+
+egList.push(4);
+egList[2] = 5;
+console.log(egList);
+
 // Camel case is acceptable naming convention in JS. 
 var myName = "John Doe";
 myName = 55;
@@ -530,8 +544,57 @@ console.log(randNumInRange(5,15));
 // Converting a string to an integer //
 
 // Use the 'parseInt' function to achieve this. 
+// Parse int can be given a base parameter to convert base 2 to base 10, etc.
+// Pass this parameter after the string in parseInt.
 
 function strToInt(string) {
     return parseInt(string);
 }
 console.log(strToInt("543"));
+
+// Ternary operator //
+
+// Its a short-hand way of writing if else statements with the '?' operator.
+// Multiple ternary operators can be nested.
+// If condition is true, write output for it, then after a colon, write the output for false.
+// See example below:
+
+function checkSign(num) {
+    return num > 0 ? "Number is positive" : num < 0 ? "Number is negative" : "Number is zero";
+}
+console.log(checkSign(-23));
+
+// Object.freeze() --> To prevent dictionary key:value pairs from being mutated, even when declared with const.
+// Even though variables declared with const are read-only, the individual elements within arrays and objects can be mutated by using their index.
+// To completely prevent mutation, use Object.freeze(object_name):
+
+function freezeObject() {
+    const FROZEN_DICT = {
+        "pi": 3.14,
+        "g": 9.8
+    };
+    Object.freeze(FROZEN_DICT);
+
+    // FROZEN_DICT["pi"] = 99;
+    try {
+        FROZEN_DICT["pi"] = 99;
+    }
+    catch {
+        console.log("Didn't change");
+    }
+    return FROZEN_DICT.pi;
+}
+console.log(freezeObject());
+
+// Is the behaviour different in latest version of JS?
+// After freezing, the value doesn't change, but no error is raised either...
+
+///////////////////////////////////////////////////////////////
+
+// Arrow Functions //
+
+// This is the Python equivalent to lambda function.
+// Shorthand function for quick applications.
+
+const magic = () => new Date();
+console.log(magic);
