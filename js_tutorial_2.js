@@ -201,3 +201,65 @@ console.log(namesFromEmail("johndoe@email.com"));
     slice() --> Slices out part of the array based on the start and end indices given. If only one argument given, that will be the start position and will slice till the end of the array.
 
  ***/
+
+/*** 
+    Objects (Dictionaries) in JS
+
+    - Objects store key:value pairs.
+    - The value can be any data type or data structure.
+    - In JS, even functions can be stored in objects.
+    - You can use one object as a template to create/instantiate another object.
+    - This uses the OOP principle of inheritance.
+    - keys(), values() returns an array of keys and values respectively.
+    - hasOwnProperty("property") returns a boolean for if the property exists in object.
+***/
+
+const vehicle = {
+    type: "car",
+    wheels: 4,
+    features: ["satnav", "parking sensors", "heated seats"],
+    engine: function () {return "vroom!";}
+}
+console.log(vehicle.engine());
+
+const truck = Object.create(vehicle);
+truck.doors = 2;
+console.log(truck);
+console.log(truck.features);
+
+// Even though the truck object has inherited attributes from the vehicle object, when using console log, only the attributes unique to 'truck' object are displayed.
+
+const car = Object.create(vehicle);
+car.doors = 4;
+car.engine = function() {return "vtec kicked in yo!";};
+
+console.log(car.engine(), car.wheels);
+
+const tesla = Object.create(car);
+tesla.engine = function() {return "silent!";};
+// creating a child object from another child object.
+// It will inherit all the unique features of object 'Car', then features of object 'vehicle'.
+
+console.log(tesla.doors, tesla.features, tesla.engine());
+
+// Destructuring Objects
+
+const band = {
+    vocals: "Robert Plant",
+    guitar: "Jimmy Page",
+    bass: "John Paul Jones",
+    drums: "Jogn Bonham"
+};
+const { vocals : a, guitar : b } = band;
+console.log(a,b);
+// Method 1 of destructuring if you want to define own variable names to store values.
+
+const { vocals, guitar } = band;
+console.log(vocals, guitar);
+// If you want to use key-names as destructured variable names, do this.
+
+function getBandPlayer({ vocals }) {
+    return `${vocals} is the singer.`;
+}
+console.log(getBandPlayer(band));
+// If args for function placed inside {}, the object keys will be parsed directly.
