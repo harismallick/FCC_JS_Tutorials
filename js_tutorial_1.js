@@ -706,6 +706,50 @@ function makeList(array) {
 console.log(makeList(result2.failure));
 
 // Arrow function to create a quick dictionary from given values //
+// Functions can also be created within an object. See example below:
 
 const createPerson = (name, age, gender) => ({name, age, gender});
 console.log(createPerson("John", "40", "Male"));
+
+let fullNames = {
+    firstname: "John",
+    lastname: "Doe",
+    fullname() {
+        return this.firstname + " " + this.lastname
+    },
+    full_arrow: () => {var self = this; return self.firstname + " " + self.lastname}
+};
+console.log(fullNames.fullname());
+// Normally, to call on an attribute in the object, you would just write the key-name.
+// But, to access a value whose key is a function, the key-name needs to be followed with '()'.
+
+// The full function syntax CANNOT be short-handed to an arrow function. See example...
+console.log(fullNames.full_arrow());
+// The output is undefined as the scope of 'this' in an arrow function is different to the scope of 'this' inside the object.
+// Don't try to use arrow functions inside objects as a result.
+
+// Object instantiation in JS //
+
+// Use the 'class' keyword, similar to Python:
+
+class SpaceShuttle {
+    constructor(planet) {
+        this.targetPlanet = planet;
+    }
+}
+let zeus = new SpaceShuttle('Jupiter');
+console.log(zeus.targetPlanet);
+
+class thermostat {
+    constructor(tempInF) {
+        this._tempInC = 5/9 * (tempInF -32);
+    }
+    get temperature() {
+        return this._tempInC;
+    }
+    set temperature(newTemp) {
+        this._tempInC = newTemp;
+    }
+}
+const currentTemp = new thermostat(98);
+console.log(currentTemp.temperature);
