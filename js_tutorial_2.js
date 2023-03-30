@@ -263,3 +263,78 @@ function getBandPlayer({ vocals }) {
 }
 console.log(getBandPlayer(band));
 // If args for function placed inside {}, the object keys will be parsed directly.
+
+
+//////////////////////////////////////////////////////////////////////////////////
+
+// Classes in JS //
+
+// Use the 'class' reserved word to define a class in JS.
+// constructor() is like the __init__ of Python to instantiate an object instance.
+// Attributes can be placed inside the constructor.
+// static and other functions can be defined without using the 'function' key word.
+// attributes need to be defined using the 'this' keyword, which is like 'self' in Python.
+// To instantiate a class object, the 'new' keyword must be used!
+
+class Pizza {
+    constructor(pizzaType, pizzaSize, pizzaCrust) {
+        this.type = pizzaType;
+        this.size = pizzaSize;
+        this.crust = pizzaCrust;
+        this.toppings = [];
+    }
+    get crustType() {
+        return this.crust;
+    }
+    set crustType(newCrust) {
+        this.crust = newCrust;
+    }
+    getSize() {
+        return this.size;
+    }
+    setSize(newSize) {
+        this.size = newSize;
+    }
+    getToppings() {
+        return this.toppings;
+    }
+    setToppings(...args) {
+        for (let item of args) {
+            this.toppings.push(item);
+        }
+    }
+
+    bake() {
+        console.log(`Baking a ${this.size} ${this.type} ${this.crust} crust pizza.`);
+    }
+}
+
+const myPizza = new Pizza("chicken tikka", "large", "stuffed");
+myPizza.bake();
+
+console.log(myPizza.crust);
+// Attributes can be accessed using dot notation followed by attribute name.
+// However, this is not desirable, as the attribute value can also be changed this way.
+// Should use getters and setters.
+console.log(myPizza.crustType);
+// console.log(myPizza.crustType("thin"));
+myPizza.crustType = "thin";
+console.log(myPizza.crustType);
+
+// Rather than using getters and setters, you can define functions with semantically appropriate names to achieve the same function.
+
+console.log(myPizza.getSize());
+myPizza.setSize("medium");
+console.log(myPizza.getSize());
+
+myPizza.setToppings("chicken", "onions", "olives", "jalapenos");
+console.log(myPizza.getToppings());
+
+class SpecialtyPizza extends Pizza {
+    constructor(shape) {
+        this.shape = shape;
+    }
+    getShape() {
+        return this.shape;
+    }
+}
