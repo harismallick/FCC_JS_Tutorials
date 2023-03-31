@@ -1,6 +1,8 @@
 // Tutorial source: https://www.youtube.com/watch?v=EfAl9bwzVZk&t=83s //
 // Documentation for key JS concepts and useful functions: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/
 
+"use strict";
+
 let myNum = 45;
 let myString = "worWORworWOR";
 let sum = myNum + myString;
@@ -277,45 +279,54 @@ console.log(getBandPlayer(band));
 // To instantiate a class object, the 'new' keyword must be used!
 
 class Pizza {
+    #size;
+    #toppings;
+    #crust;
     constructor(pizzaType, pizzaSize, pizzaCrust) {
         this.type = pizzaType;
-        this.size = pizzaSize;
-        this.crust = pizzaCrust;
-        this.toppings = [];
+        this.#size = pizzaSize;
+        this.#crust = pizzaCrust;
+        this.#toppings = [];
     }
     get crustType() {
-        return this.crust;
+        return this.#crust;
     }
     set crustType(newCrust) {
-        this.crust = newCrust;
+        this.#crust = newCrust;
     }
     getSize() {
-        return this.size;
+        return this.#size;
     }
     setSize(newSize) {
-        this.size = newSize;
+        this.#size = newSize;
     }
     getToppings() {
-        return this.toppings;
+        return this.#toppings;
     }
     setToppings(...args) {
         for (let item of args) {
-            this.toppings.push(item);
+            this.#toppings.push(item);
         }
     }
 
     bake() {
-        console.log(`Baking a ${this.size} ${this.type} ${this.crust} crust pizza.`);
+        console.log(`Baking a ${this.#size} ${this.type} ${this.#crust} crust pizza with ${this.#toppings} toppings.`);
     }
 }
 
 const myPizza = new Pizza("chicken tikka", "large", "stuffed");
 myPizza.bake();
 
-console.log(myPizza.crust);
+// console.log(myPizza.#crust);
+// Trying to access a private variable outside of the class will result in an error.
+// Trying to access it without the '#' will output undefined.
+
 // Attributes can be accessed using dot notation followed by attribute name.
 // However, this is not desirable, as the attribute value can also be changed this way.
 // Should use getters and setters.
+// Make the attributes private by placing an '#' before the attribute name.
+// Then only getters and setter will be used to access the attributes.
+
 console.log(myPizza.crustType);
 // console.log(myPizza.crustType("thin"));
 myPizza.crustType = "thin";
@@ -329,12 +340,117 @@ console.log(myPizza.getSize());
 
 myPizza.setToppings("chicken", "onions", "olives", "jalapenos");
 console.log(myPizza.getToppings());
+myPizza.bake();
 
 class SpecialtyPizza extends Pizza {
-    constructor(shape) {
+    constructor(pizzaType, pizzaSize, pizzaCrust, shape) {
+        super(pizzaType, pizzaSize, pizzaCrust)
         this.shape = shape;
     }
     getShape() {
         return this.shape;
     }
+    setShape(newShape) {
+        this.shape = newShape;
+    }
 }
+
+const newPizza = new SpecialtyPizza("pepperoni", "large", "stuffed", "square");
+console.log(newPizza.getShape());
+console.log(newPizza.crustType);
+
+// Use the super() function to pass arguments from the child class to the parent class to instantiate attributes for the object. 
+
+////////////////////////////////////////////////////////////////////////////
+
+// JSON: Javascript Object Notation Format //
+
+// It is currently the most popular format for sharing data over the web.
+// JSON is language independent and can be parsed or generated using any programming language.
+// It is a collection of key:value pairs, where the keys are ALWAYS in double quotes.
+// In JS, there's no need to write object keys in quotes. But, for json, its a must.
+// In JS, you can add functions to objects. These cannot be converted to json format, and will be ignored during the conversion.
+
+const myObj = {
+    name: "John Doe",
+    hobbies: ["eat", "sleep", "code"],
+    hello() { console.log("Hello World")}
+}
+myObj.hello();
+console.log(myObj.name);
+console.log(Object.keys(myObj));
+// You can see that 'hello' is clearly a key with the value of a function.
+// But this key wont be converted to json.
+// Convert object to JSON using the following methods:
+
+const myObjJson = JSON.stringify(myObj);
+console.log(myObjJson);
+console.log(typeof myObjJson);
+
+const myObjJsonConvert = JSON.parse(myObjJson);
+console.log(myObjJsonConvert);
+console.log(typeof myObjJsonConvert);
+
+// JSON is a string datatype. In order to parse through it using object notations, it must be converted to an object first. This is achieved using the JSON.parse() method.
+
+/////////////////////////////////////////////////////////////////////////////
+
+// Error handling in JS //
+
+// To avoid typing errors and mismanaged variable names, add "use strict"; to the top of the script. This tells JS to apply strict typing to variables. Either const or let needs to be used to declare and define variables.
+// Like most languages, use try-catch blocks to deal with errors if they are expected.
+// With any error, you can choose to display three attributes: err.name, err.message and/or err.stack.
+
+function makeError() {
+    try {
+        // const name = "John";
+        // name = "Doe";
+        // // Should throw error as name declared with const.
+        throw new customError("This is a custom error.");
+    }
+    catch (err) {
+        // console.log(err);
+        // console.warn(err);
+        console.error(err.name);
+        console.table(err);
+
+    }
+}
+makeError();
+// The different console methods only look different in the browser. 
+// In the terminal with node.js, they all look the same.
+console.log("\nStatement after try catch block to see if downstream code executes.");
+
+// Can create custom errors to catch:
+
+function customError(message) {
+    this.message = message;
+    this.name = "Custom Error";
+    this.stack = `${this.name}: ${this.message}`;
+}
+
+function tryCatchFinally() {
+    let i = 1;
+
+    while (i <= 5) {
+        try {
+            if (i % 2 !== 0) {
+                throw new Error("Odd Number");
+            }
+            console.log("Even Number"); // This line of code will only execute if no error thrown in the code above in the try block. If an error occurs, all downstream code in the try block is ignored.
+        }
+        catch (err) {
+            console.error(err.name);
+        }
+        finally {
+            i++;
+            console.log("...finally");
+        }
+    }
+}
+tryCatchFinally();
+
+/////////////////////////////////////////////////////////////////////////////////////
+
+// Document Object Model (DOM) //
+
