@@ -454,3 +454,100 @@ tryCatchFinally();
 
 // Document Object Model (DOM) //
 
+const view1 = document.getElementById("view1");
+console.log(view1);
+const view2 = document.querySelector("#view2");
+console.log(view2);
+// Two different ways of obtaining html elements by using their id.
+// When using the querySelector() method, need to place a '#' before the id, to tell JS that its a class name.
+
+view1.style.display = "flex";
+view2.style.display = "flex"; // try "none". This display is removed.
+
+const views = document.getElementsByClassName("view");
+console.log(views);
+
+const views2 = document.querySelectorAll(".view");
+// Just like '#' is used in querySelector to signify an id, '.' signifies a class. Query selector will look for a class with the name that follows the dot.
+console.log(views2);
+
+const divs = document.getElementsByTagName("div");
+console.log(divs);
+
+const divs2 = document.querySelectorAll("div");
+// To search for particular tags, just write the tag name. No special characters needed.
+console.log(divs2);
+
+// getElements methods output an html collection, while using the query selector outputs a list of nodes.
+// Every element in an html page is a node.
+
+// Once you've isolated the html elements you want, you can modify them using JS as well.
+
+const evenDivs = document.querySelectorAll("div:nth-of-type(2n");
+console.log(evenDivs);
+
+for (let div of evenDivs) {
+    div.style.backgroundColor = "darkblue";
+}
+
+// Changing the text //
+
+const navText = document.querySelector("nav h1");
+console.log(navText);
+
+navText.textContent = "Hello world";
+
+const navbar = document.querySelector("nav");
+navbar.innerHTML = `<h1>Hello!</h1> <p>This should align right</p>`;
+navbar.style.justifyContent = "space-between";
+console.log(navbar);
+
+// Navigating the HTML DOM by using different methods, shown below.
+// From just one node, you can navigate the entire DOM tree by accessing adjacent or parent elements.
+
+console.log(evenDivs[0]);
+console.log(evenDivs[0].parentElement);
+console.log(evenDivs[0].parentElement.children);
+console.log(evenDivs[0].parentElement.childNodes);
+console.log(evenDivs[0].parentElement.lastChild);
+console.log(evenDivs[0].parentElement.firstChild);
+console.log(evenDivs[0].parentElement.firstElementChild);
+console.log(evenDivs[0].parentElement.nextSibling);
+console.log(evenDivs[0].parentElement.previousSibling);
+console.log(evenDivs[0].parentElement.previousElementSibling);
+
+view1.style.display = "none";
+view2.style.flexDirection = "row";
+view2.style.flexWrap = "wrap";
+view2.style.margin = "10px";
+
+// Removing elements from html page:
+
+while (view2.lastChild) {
+    view2.lastChild.remove();
+}
+
+// Creating a new element in HTML using JS:
+
+function createDivs(parent, iter) {
+    const newDiv = document.createElement("div");
+    newDiv.textContent = iter;
+    newDiv.style.backgroundColor = "#000";
+    newDiv.style.width = "100px";
+    newDiv.style.height = "100px";
+    newDiv.style.margin = "10px";
+    newDiv.style.display = "flex";
+    newDiv.style.justifyContent = "center";
+    newDiv.style.alignItems = "center";
+    parent.append(newDiv);
+
+}
+// Using function to create one element:
+// createDivs(view2, 10);
+
+// Creating multiple new elements using the same function with loops:
+
+for (let i = 1; i <= 12; i++) {
+    createDivs(view2, i);
+}
+
