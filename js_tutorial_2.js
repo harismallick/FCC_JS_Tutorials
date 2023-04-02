@@ -551,3 +551,127 @@ for (let i = 1; i <= 12; i++) {
     createDivs(view2, i);
 }
 
+const testH2 = document.createElement("h2");
+// const testHeader = document.testDiv.createElement("h2");
+testH2.textContent = "Second Page";
+view2.append(testH2);
+
+//////////////////////////////////////////////////////////////////////////////////////
+
+// Event Listeners on HTML with JS //
+
+console.log(view2);
+
+// This document element linked to id will only be accessed by a linked JS script if the execution of the script tag is set to 'defer'. This will enable the entire html page to be parsed before the script is run.
+
+// Event listeners are a way to track user activity on the html page, at to execute particular tasks based on the event.
+
+function initApp() {
+    const div = view2.querySelector("div");
+    const h2 = view2.querySelector("h2");
+
+    // Syntax: addEventListener(event, function, useCapture);
+
+    const doSomething = () => {
+        alert("You clicked something.");
+    }
+    h2.addEventListener("click", doSomething, false);
+    h2.removeEventListener("click", doSomething, false);
+
+    // Event listeners can be removed using the removeEventListener method.
+    // However, this method does not work on anonymous functions as shown below:
+    view2.addEventListener("click", (event) => {
+        view2.style.backgroundColor = "purple";
+        // view2.classList.toggle("purple");
+        // view2.classList.toggle("darkblue");
+        // Will only work if css classes defined.
+        console.log("background-color changed")
+    });
+    h2.addEventListener("click", (event) => {
+        event.stopPropagation();
+        console.log(event.target);
+        const myText = event.target.textContent;
+        myText === "Second Page" ? (event.target.textContent = "Clicked it") : (event.target.textContent = "Second Page");
+        localStorage.clear();
+        // See storage API below -- any local data will be deleted on click.
+    });
+    const nav = document.querySelector("nav");
+    nav.addEventListener("mouseover", (event) => {
+        nav.style.height = "100px";
+    })
+    nav.addEventListener("mouseout", () => {
+        nav.style.height = "48px";
+    })
+    // Many different event types can be triggered on html pages. Read documentation for more info.
+}
+// You can see that when event listeners are linked to layered elements on the html page, one event listener can initiate another (clicking h2 causes view2 color to change).
+// This is known an event bubbling.
+// To prevent this from happening, use the event.stopPropagation() method.
+
+document.addEventListener("readystatechange", (event) => {
+    if (event.target.readyState === "complete") {
+        console.log("ReadyState: complete");
+        initApp();
+    }
+})
+
+// Having an event listener for ready state means you can ensure the html page is fully loaded before you activate other event listeners for the user to interact with.
+
+////////////////////////////////////////////////////////////////
+
+// Web storage API //
+
+// When making a web based application, data might need to be stored for each session or for multiple sessions.
+// To achieve this, the sessionStorage and localStorage functions are used. 
+// Data stored per session will be lost every time the webpage is refreshed or closed.
+// Local data will be available even when the web page has been closed.
+
+const testArray = ["eat", "sleep", "code"];
+
+sessionStorage.setItem("sessionData", JSON.stringify(testArray));
+const sessionData = JSON.parse(sessionStorage.getItem("sessionData"));
+
+localStorage.setItem("localData", JSON.stringify(testArray));
+const localData = JSON.parse(localStorage.getItem("sessionData"));
+
+// The web storage API saves data in strings ONLY.
+// So the JSON class can be used to convert data between string and the expected data type.
+
+////////////////////////////////////////////////////////////////////
+
+// Importing modules/packages in JS //
+
+// <script type="module" src="js_tutorial_2.js"></script>
+// When you will be importing functions from other JS files into the source JS file linked to an html page, type="module" is needed.
+// It applies the 'defer' attribute by default, so no need to write it.
+// "use strict"; is also applied by default when using modules.
+// For the functions that you wish to export into the current JS file, make sure 'export' is added in front of the function definition.
+// One default export function can be created by adding 'default' to the definition.
+// See the module.js file for example.
+
+import playGuitar from "./module.js";
+import { shredding, plucking as picking } from "./module.js";
+import { nameEmail } from "./module.js";
+// You can rename a function before using it in your script, in case you have created functions in your script with the same name.
+// Can import classes the same way.
+
+console.log(playGuitar());
+console.log(shredding());
+console.log(picking());
+
+const newUser = new nameEmail("John Doe", "email@email.com");
+console.log(newUser.greeting());
+
+
+///////////////////////////////////////////////////////////////////
+
+// Higher order functions in JS //
+
+// These are functions that do one of the following:
+// Take one or more functions as an argument
+// Returns a function as a result.
+
+// There are three higher order functions:
+// - map()
+// - filter()
+// reduce()
