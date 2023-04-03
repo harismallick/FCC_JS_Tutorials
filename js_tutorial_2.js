@@ -674,4 +674,116 @@ console.log(newUser.greeting());
 // There are three higher order functions:
 // - map()
 // - filter()
-// reduce()
+// - reduce()
+
+// Test data acquired from https://jsonplaceholder.typicode.com/posts
+
+import dataObjects from "./data.json" assert { type: 'json'};
+
+console.log(dataObjects);
+
+const dataFiltered = dataObjects.filter(filterByUser);
+
+function filterByUser(data) {
+    if (data["userId"] === 1) {
+        return data;
+    }
+}
+console.log(dataFiltered);
+
+const dataFilteredMapped = dataFiltered.map((data) => {
+    return data["id"] * 10;
+});
+console.log(dataFilteredMapped);
+
+const filteredMappedReduced = dataFilteredMapped.reduce((sum, data) => {
+    return sum + data;
+});
+
+console.log(filteredMappedReduced);
+
+
+// Aync await functions in JS //
+
+// Web scraping and other applications that invovle using http requests require waiting on the data from the request, then executing lines of code to process the data downstream.
+// In Python, the interpreter will not move to the next line of code, until the initial line of code is fully resolved.
+// But in JS, the next lines of code will get executed, even if the previous get request is not fully resolved.
+// No data will be present for using the downstream lines of code.
+// To avoid this from happening, the follwing three concepts are used:
+// - Promises
+// - then() method
+// - Async/Await functions
+
+// Promises have three states: resolved (fulfilled), rejected and pending.
+// Since JS does not wait for code to complete execution before moving on to next line, need to use then() dot method to force JS into waiting for promise to be fulfilled before moving on to next line of code.
+
+const myPromise = new Promise((resolve, reject) => {
+    const error = false;
+    if (!error) {
+        resolve("Yes, promise resolved");
+    }
+    else {
+        reject("No, promise rejected");
+    }
+});
+
+console.log(myPromise);
+
+// myPromise.then(value => {
+//     return value + 1;
+// }).then(newValue => {
+//     console.log(newValue);
+// }).catch(error => {
+//     console.error(error);
+// })
+
+const myNextPromise = new Promise((resolve, reject) => {
+    setTimeout(function() {
+        resolve("myNextPromise resolved!");
+    }, 3000);
+});
+
+myNextPromise.then(value => {console.log(value);});
+
+myPromise.then(value => {console.log(value);});
+
+// You can see that even though we called the 'nextPromise' first in the script, 'myPromise' was logged to the console before it.
+// JS did not wait for the 3 second timeout, it moved on to the next line of code.
+
+const apiUsers = fetch("https://jsonplaceholder.typicode.com/users");
+
+console.log(apiUsers);
+// Rather than logging the data, Promise {<pending>} was logged in the console.
+
+apiUsers.then(response => {
+    // console.log(response); // This will output data as readable stream
+    return response.json();
+}).then(data => {
+    console.log(data);
+});
+
+// This method of resolving promises can result in a long chain of then() callbacks, which can make the code hard to read and follow.
+// This is resolved using asyn and await.
+
+const myUsers = {
+    userList: []
+};
+
+async function coolFunc() {
+    const response = await fetch("https://jsonplaceholder.typicode.com/users");
+    const jsonData = await response.json();
+    return jsonData;
+}
+
+async function coolFunc2() {
+    const data = await coolFunc();
+    myUsers.userList = data;
+    console.log(myUsers.userList);
+}
+
+coolFunc2();
+console.log(myUsers.userList);
+// This log function will return an empty array, as its not 'awaiting' the output of the async function.
+// The log function in the async function is waiting, so it output the data into the array.
+
+
