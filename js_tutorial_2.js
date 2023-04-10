@@ -787,3 +787,18 @@ console.log(myUsers.userList);
 // The log function in the async function is waiting, so it output the data into the array.
 
 
+// Regex in JS //
+
+/** 
+    Regex cheat sheet can be found here:
+    https://www.rexegg.com/regex-quickstart.html
+**/
+
+
+function regexTest(input) {
+    const regex = /[()-. ]/g;
+    const newText = input.replaceAll(regex, "");
+    return newText;
+}
+
+console.log(`If the regex worked, all numbers printed together: ${regexTest("(555) 678-1234.000")}`);
